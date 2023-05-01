@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="container">
+    <h1>Update the entry here</h1>
+    <form action="{{ url_for('update', id=entry['_id'])}}" class="form" method="POST">
+        <p class="form__input">
+            <label for="entry" class="form__label">Add the contents:</label>
+            <textarea name="content" id="entry" class="form__textarea" placeholder="Write updated blog!"></textarea>
+        </p>
+        <button type="submit" class="form__submit">Update entry</button>
+    </form>
+</section>
+{% endblock %}

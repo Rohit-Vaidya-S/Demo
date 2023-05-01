@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1 class="search_h1">Search Entries</h1>
+  <form method="POST" action="{{ url_for('search') }}">
+    <input class="search_form__input" type="text" name="keyword" placeholder="Enter keyword">
+    <input class="search_form__input" type="submit" value="Search">
+  </form>
+</div>
+{% endblock %}

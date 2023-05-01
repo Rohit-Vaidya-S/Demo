@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>MircoBlog</title>
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar__brand">
+            <img src="/static/logo.svg" alt="MircoBlog logo" class="navbar__logo"/>MircoBlog
+        </div>
+        
+        <ul class="navbar__navigation">
+            <li class="navbar__navigation-item"><a href={{ url_for('about') }} class="navbar__link">About</a></li>
+            <li class="navbar__navigation-item"><a href={{ url_for('search') }} class="navbar__link">Search</a></li>
+        </ul>
+    
+    </header>
+    <main class="main">
+        <section>
+            <h1>Add new entry</h1>
+            <form action="/home" class="form" method="POST">
+                <p class="form__input">
+                    <label for="entry" class="form__label">Entry contents:</label>
+                    <textarea name="content" id="entry" class="form__textarea" placeholder="Write your blog!"></textarea>
+                </p>
+                <button type="submit" class="form__submit">Add entry</button>
+            </form>
+        </section>
+      
+        <section>
+            <h1>Recent posts</h1>
+            {% for entry in entries %}
+        <article class="entry">
+          <div class="actions">
+            <a href="{{ url_for('update', id=entry[3]) }}">Update</a>
+            <a href="{{ url_for('delete', id=entry[3]) }}">Delete</a>
+        </div>
+          <div>
+            <h2 class="entry__title">{{ entry[0] | truncate(30, true) }}</h2>
+            <time class="entry__date" datetime="{{ entry[1] }}">• {{ entry[2] }}</time>
+          </div>
+          <p class="entry__content">
+            {{ entry[0] }}
+          </p>
+        </article>
+      {% endfor %}
+        </section>
+        {% if total_pages > 1 %}
+
+      <div class="pagination">
+    {% for p in range(1, total_pages + 1) %}
+    {% if p == page %}
+    <span class="current-page">{{ p }}</span>
+    {% else %}
+    <a href="{{ url_for('home', page=p) }}">{{ p }}</a>
+    {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+    </main>
+    <footer class="footer">
+        <div class="footer__content">
+            <section class="left">
+              <a class="footer__item">Made by Rohit Vaidya S</a>
+              <a class="footer__item">Check out my other projects</a>
+            </section>
+            <section class="right">
+              <div class="footer__column">
+                <a class="footer__item" href="#">Contact No: 7406433303</a>
+                <a class="footer__item" href={{ url_for('calendar') }}>Calendar</a>
+              </div>
+              <div class="footer__column">
+                <a class="footer__item" href={{ url_for('about') }}>About</a>
+                <a class="footer__item"  href={{ url_for('how') }}>How This Was Made</a>
+              </div>
+            </section>
+          </div>
+    </footer>
+</body>
+</html>
